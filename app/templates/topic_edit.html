@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit Topic</title>
+	<link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+
+<form method="post" action="{{ url_for("topic_edit", id = post.id) }}">
+    <div class="box">
+
+        <h1> Edit Topic : </h1>
+        <h4> {{post.title}} </h4>
+
+        <input type="title" name="title" placeholder="title" class="title" />
+
+        <input type="content" name="content" placeholder="content" class="content" />
+
+        <input id="btn2" type="submit" value=" Update"/>
+
+    </div> <!-- End Box -->
+</form>
+</body>

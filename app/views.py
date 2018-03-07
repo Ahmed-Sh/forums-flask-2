@@ -17,3 +17,26 @@ def topic_add():
 
     else:
         return render_template("topic_add.html")
+        
+        
+@app.route("/topic/delete/<int:id>")
+def topic_delete(id):
+    post_store.delete(id)
+    return redirect(url_for("home"))
+
+@app.route("/topic/show/<int:id>")
+def topic_show(id):
+    post_store.show(id)
+    return render_template("topic_show.html", post = post_store.show(id))
+
+@app.route("/topic/edit/<int:id>", methods = ["GET", "POST"])
+def topic_edit(id):
+    if request.method == "POST":
+        updated_post = post_store.get_by_id(id)
+        updated_post.title = request.form["title"]
+        updated_post.content = request.form["content"]
+        post_store.update(updated_post)
+        return redirect(url_for("home"))
+    else:
+        updated_post = post_store.get_by_id(id)
+        return render_template("topic_edit.html", post = updated_post)
