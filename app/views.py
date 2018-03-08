@@ -17,22 +17,29 @@ def topic_add():
 
     else:
         return render_template("topic_add.html")
-        
-        
+
 @app.route("/topic/delete/<int:id>")
 def topic_delete(id):
-    post_store.delete(id)
+    try:
+        post_store.delete(id)
+    except ValueError:
+        abort(404)
     return redirect(url_for("home"))
 
 @app.route("/topic/show/<int:id>")
 def topic_show(id):
-    post_store.show(id)
-    return render_template("topic_show.html", post = post_store.show(id))
+    post = post_store.get_by_id(id)
+    if post is None:
+        abort(404)
+    return render_template("topic_show.html", post = post)
 
 @app.route("/topic/edit/<int:id>", methods = ["GET", "POST"])
 def topic_edit(id):
+    updated_post = post_store.get_by_id(id)
+    if updated_post is None:
+        abort(404)
+
     if request.method == "POST":
-        updated_post = post_store.get_by_id(id)
         updated_post.title = request.form["title"]
         updated_post.content = request.form["content"]
         post_store.update(updated_post)
@@ -40,3 +47,7 @@ def topic_edit(id):
     else:
         updated_post = post_store.get_by_id(id)
         return render_template("topic_edit.html", post = updated_post)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
