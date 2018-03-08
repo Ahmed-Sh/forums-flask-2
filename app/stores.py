@@ -37,11 +37,6 @@ class BaseStore():
 
         return result
 
-    def show(self, id):
-        member = self.get_by_id(id)
-        if member is not None:
-            return member
-
     def delete(self, id):
         member = self.get_by_id(id)
         if member is not None:
