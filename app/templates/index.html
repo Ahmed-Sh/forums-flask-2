@@ -58,7 +58,7 @@ thead {
     </div>
 
     <div class="content">
-        <a href="/api/topic/add">Create</a>
+        <a href="{{ url_for("topic_add") }}">Create</a>
 
         <table>
 
@@ -86,11 +86,11 @@ thead {
                 </td>
             
                 <td>
-                    <a href="{{ url_for("topic_edit", id = post.id) }}">edit</a>
+                    <a href="{{ url_for("topic_update", id = post.id) }}">edit</a>
                 </td>
             
                 <td>
-                    <a href="{{ url_for("topic_delete", id = post.id) }}"> delete </a>
+                    <a id="delete" href="{{ url_for("topic_delete", id = post.id) }}"> delete </a>
                 </td>
             </tr>
             {% endfor %}
@@ -106,3 +106,32 @@ thead {
 </body>
 
 </html>
+
+
+<script>
+    $(function (id)
+    {
+        $("delete").submit(function (event)
+        {
+            event.preventDefault();
+
+            var topicTitle = .val();
+
+            var topicData = {
+                    "id": id
+                    };
+
+            $.ajax({
+                type: "POST",
+                url: "/api/topic/delete",
+                data: JSON.stringify(topicData),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response)
+                {
+                    alert("deleted topic successfully !");
+                }
+            });
+        });
+    });
+</script>
