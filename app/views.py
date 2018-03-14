@@ -33,8 +33,8 @@ def topic_show(id):
         abort(404)
     return render_template("topic_show.html", post = post)
 
-@app.route("/topic/edit/<int:id>", methods = ["GET", "POST"])
-def topic_edit(id):
+@app.route("/topic/update/<int:id>", methods = ["GET", "POST"])
+def topic_update(id):
     updated_post = post_store.get_by_id(id)
     if updated_post is None:
         abort(404)

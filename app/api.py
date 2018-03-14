@@ -9,7 +9,7 @@ def topic_get_all():
     return jsonify(posts)
     
 @app.route("/api/topic/add", methods = ["POST"])
-def topic_create():
+def api_topic_add():
     request_data = request.get_json()
     new_post = models.post(request_data["title"], request_data["content"])
     post_store.add(new_post)
@@ -32,8 +32,8 @@ def api_topic_show(id):
     post = post_store.get_by_id(id)
     return jsonify(post.__dict__())
     
-@app.route("/api/topic/edit/<int:id>", methods = ["GET", "POST"])
-def api_topic_edit(id):
+@app.route("/api/topic/update/<int:id>", methods = ["GET", "POST"])
+def api_topic_update(id):
     request_data = request.get_json()
     updated_post = post_store.get_by_id(id)
     updated_post.title = request_data["title"]

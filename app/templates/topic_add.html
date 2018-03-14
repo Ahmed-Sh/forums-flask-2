@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form method="post" action="{{ url_for("topic_add") }}">
+<form method="post" id="submit_form" "action="{{ url_for("topic_add") }}">
     <div class="box">
         <h1> Add Topic </h1>
 
@@ -14,8 +14,44 @@
 
         <input type="content" name="content" placeholder="content" class="content" />
 
-        <input id="btn2" type="submit" value="Create"/>
+        <input id="btn2" type="submit" id="submit_button" value="Create"/>
 
     </div> <!-- End Box -->
 </form>
 </body>
+
+
+<script
+   src="https://code.jquery.com/jquery-3.3.1.min.js"
+   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+   crossorigin="anonymous"></script>
+
+<script>
+    $(function ()
+    {
+        $("submit_form").submit(function (event)
+        {
+            event.preventDefault();
+
+            var topicTitle = $("input[name='title']").val();
+            var topicContent = $("input[name='content']").val();
+
+            var topicData = {
+                    "title": topicTitle,
+                    "content": topicContent
+                    };
+
+            $.ajax({
+                type: "POST",
+                url: "/api/topic/add",
+                data: JSON.stringify(topicData),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response)
+                {
+                    alert("Added topic successfully !");
+                }
+            });
+        });
+    });
+</script>
