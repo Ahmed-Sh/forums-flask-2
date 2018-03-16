@@ -107,31 +107,30 @@ thead {
 
 </html>
 
+<script
+   src="https://code.jquery.com/jquery-3.3.1.min.js"
+   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+   crossorigin="anonymous"></script>
 
 <script>
-    $(function (id)
-    {
-        $("delete").submit(function (event)
-        {
-            event.preventDefault();
 
-            var topicTitle = .val();
-
-            var topicData = {
-                    "id": id
-                    };
-
-            $.ajax({
-                type: "POST",
-                url: "/api/topic/delete",
-                data: JSON.stringify(topicData),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response)
-                {
-                    alert("deleted topic successfully !");
-                }
-            });
-        });
-    });
+<script>
+    $(function ()
+  {
+      $("#delete").click(function (event)
+      {
+          event.preventDefault();
+          $.ajax({
+              type: “DEL”,
+              url: $(this).attr(‘href’),
+              success: function (response)
+              {
+                  alert(“deleted topic successfully !”);
+              }
+          });
+      });
+  });
 </script>
+
+
+
